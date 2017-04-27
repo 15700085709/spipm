@@ -1,19 +1,9 @@
 package com.ywx.tiles.account.entity;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import com.ywx.tiles.common.support.UuidEntity;
 
 /**
@@ -21,7 +11,7 @@ import com.ywx.tiles.common.support.UuidEntity;
  * 使用JPA annotation定义ORM关系.
  */
 @Entity
-@Table(name = "UA_USER")
+@Table(name = "SPIPM_USER")
 public class User extends UuidEntity {
 
 	/**
@@ -30,11 +20,13 @@ public class User extends UuidEntity {
 	private static final long serialVersionUID = -3997322258166615391L;
 
 	/** 登录名称 **/
-	private String loginName;
+	private String userName;
 	/** 登录密码 **/
 	private String password;
 	/** 显示名称 **/
 	private String displayName;
+	/** 用户类型 **/
+	private String type;
 	/** 性别 **/
 	private String gender;
 	/** 状态 **/
@@ -53,20 +45,16 @@ public class User extends UuidEntity {
 	private String mobilePhone;
 	/** 电子邮箱 **/
 	private String email;
-	/** 人员排序 **/
-	private String orderNum;
 
-	/** 所属部门 **/
-	private Department department;
-	/** 角色 **/
-	private Set<Role> roles = new HashSet<Role>();
 
-	public String getLoginName() {
-		return loginName;
+
+
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -83,6 +71,14 @@ public class User extends UuidEntity {
 
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getGender() {
@@ -157,38 +153,8 @@ public class User extends UuidEntity {
 		this.email = email;
 	}
 
-	public String getOrderNum() {
-		return orderNum;
-	}
 
-	public void setOrderNum(String orderNum) {
-		this.orderNum = orderNum;
-	}
 
-	@ManyToOne(cascade = CascadeType.REFRESH, optional = false)
-	@JoinColumn(name="department_id")
-	public Department getDepartment() {
-		return department;
-	}
 
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
-	// 多对多定义
-	@ManyToMany
-	// 中间表定义,表名采用默认命名规则
-	@JoinTable(name = "UA_USER_ROLE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-	// Fecth策略定义
-	@Fetch(FetchMode.SUBSELECT)
-	// 集合按id排序.
-	@OrderBy("id")
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
 
 }

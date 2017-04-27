@@ -11,5 +11,8 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> getUserList();
-
+	List<User> getUserBy(final String propertyName, final Object value);
+	List<User> getUserBy(final String propertyName, final Object value, final String propertyName1, final Object value1);
+    List<User> queryForPage(int offset, int length);
+    void deleteById(final Object id);
 }

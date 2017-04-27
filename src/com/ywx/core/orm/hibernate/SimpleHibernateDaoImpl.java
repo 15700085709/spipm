@@ -72,7 +72,7 @@ public abstract class SimpleHibernateDaoImpl<T> implements SimpleHibernateDao<T>
 	 * @return
 	 */
 	protected Session getSession() {
-		return sessionFactory.openSession();
+		return sessionFactory.getCurrentSession();
 	}
 
 	/**
@@ -103,12 +103,13 @@ public abstract class SimpleHibernateDaoImpl<T> implements SimpleHibernateDao<T>
 	public void delete(Object entity) {
 		Assert.notNull(entity, "entity不能为空");
 		getSession().delete(entity);
+		getSession().flush();
 		logger.debug("delete entity: {}", entity);
 	}
 
 	public void deleteById(Object id) {
 		Assert.notNull(id, "id不能为空");
-		delete(get(id));
+		delete(get(id,true));
 		logger.debug("delete entity {},id is {}", entityClass.getSimpleName(), id);
 	}
 
