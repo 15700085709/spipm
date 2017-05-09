@@ -85,7 +85,9 @@ public abstract class SimpleHibernateDaoImpl<T> implements SimpleHibernateDao<T>
 	public Object save(Object entity) {
 		Assert.notNull(entity, "entity不能为空");
 		logger.debug("save entity: {}", entity);
-		return getSession().save(entity);
+		Object obj = getSession().save(entity);
+		getSession().flush();
+		return obj;
 	}
 
 	public void saveOrUpdate(Object entity) {

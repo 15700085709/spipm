@@ -34,5 +34,8 @@ public class UserServiceImpl implements UserService {
 	public void deleteById(final Object id){
 		userDao.deleteById(id);
 	}
+	public void addUser(User user){
+		userDao.save(user);
+	}
 }
 

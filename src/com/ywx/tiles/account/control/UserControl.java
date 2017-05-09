@@ -21,9 +21,6 @@ import com.ywx.tiles.common.support.CrudBaseSupport;
 @RequestMapping("/user")
 public class UserControl extends CrudBaseSupport {
 
-	/** 模块前缀 **/
-	private static final String PREFIX = "user/";
-
 	@Autowired
 	private UserService userService;
 
@@ -44,7 +41,7 @@ public class UserControl extends CrudBaseSupport {
 		List<User> userList = userService.getUserList();
 
 		System.out.println(userList);
-		map.put("user", userList);
+		map.put("userList", userList);
 		return "../../page";
 	}
 
@@ -52,13 +49,13 @@ public class UserControl extends CrudBaseSupport {
 	public String login(User user, Map<String, Object> map) {
 //		System.out.println("用户登录。。。" + user.getLoginName());
 //		List<User> userList = userService.getUserList();
-//		map.put("user", userList);
+//		map.put("userList", userList);
 		List<User> userList = userService.getUserBy("userName",user.getUserName(),"password",Encrypt.MD5(user.getPassword()));
 		if(userList.size()==0){
 			map.put("error", "yes");
 			return "../../index";
 		}else{
-			return "frame/" + "index";
+			return "../../page";
 		}
 	}
 	@RequestMapping(value = "/userDelete", method = RequestMethod.GET)
@@ -71,12 +68,28 @@ public class UserControl extends CrudBaseSupport {
 
 	}
 	@RequestMapping(value = "/userAdd", method = RequestMethod.POST)
-	public String add(User user) {
-
+	public String add(User user, Map<String, Object> map) {
+		String message = "";
 		List<User> userList = userService.getUserBy("userName", user.getUserName());
-		if(userList.size())
-		return "../../page";
+		if(userList.size()==0){
+			user.setPassword(Encrypt.MD5(user.getPassword()));
+			userService.addUser(user);
+			try
+			{
+				message = "添加人员信息成功！";
+			}catch(Exception e){
+				message = "添加人员信息失败！";
+			}
 
+		}else{
+			message = "该用户名已存在！";
+		}
+		List<User> userLists = userService.getUserList();
+
+		map.put("userList", userLists);
+		System.out.println(map.get("userList"));
+		map.put("message", message);
+		return "../../page";
 	}
 	
 }
