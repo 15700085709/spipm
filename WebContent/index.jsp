@@ -6,15 +6,10 @@
         <meta charset="utf-8">
         <title>软件项目实施过程管理系统</title>
 
-        <!-- CSS -->
         <link rel="stylesheet" href="${ctx}/assets/css/reset.css">
         <link rel="stylesheet" href="${ctx}/assets/css/supersized.css">
         <link rel="stylesheet" href="${ctx}/assets/css/style.css">
 
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
 
     </head>
 
@@ -26,7 +21,7 @@
             	<a id="message" hidden="hidden" color="red">
             	<font size="3" color="red">登陆失败,用户名或密码错误!</font>
             	</a>
-                <input type="text" name="userName" class="userName" placeholder="用户名">
+                <input type="text" name="userId" class="userId" placeholder="职工ID">
                 <input type="password" name="password" class="password" placeholder="密码">
                 <button type="submit">登陆</button>
                 <div class="error"><span>+</span></div>

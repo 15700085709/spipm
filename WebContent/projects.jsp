@@ -11,8 +11,8 @@
 <body>
 
 
-
-<a href="${ctx}/project/projectList"><input type="button" name="show" value="show" /></a>
+${ctx}
+<input type="button" name="show" value="show" onClick="window.location.href='${ctx}/project/projectList'"/>
 	<h2>Project list info !!!</h2>
 	<c:if test="${empty requestScope.projectList }">
 		没有记录
@@ -37,8 +37,8 @@
 					<td>${p.proInfo }</td>
 					<td>${p.manager }</td>
 					<td>${p.process }</td>
-					<td><a href="${ctx}/project/proPlanDownload?id=${p.id }"><input type="button" name="download" value="下载项目计划" /></a></td>		
-					<td>修改<a href="${ctx}/project/projectdelete?id=${p.id }"><input type="button" name="delete" value="删除" /></a></td>				
+					<td><input type="button" name="download" value="下载项目计划" onClick="window.location.href='${ctx}/project/proPlanDownload?id=${p.id }'" /></td>		
+					<td>修改<input type="button" name="delete" value="删除" onClick="window.location.href='${ctx}/project/projectDelete?id=${p.id }'" /></td>				
 				</tr>
 			</c:forEach>
 		</table>

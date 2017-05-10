@@ -50,7 +50,7 @@ public class UserControl extends CrudBaseSupport {
 //		System.out.println("用户登录。。。" + user.getLoginName());
 //		List<User> userList = userService.getUserList();
 //		map.put("userList", userList);
-		List<User> userList = userService.getUserBy("userName",user.getUserName(),"password",Encrypt.MD5(user.getPassword()));
+		List<User> userList = userService.getUserBy("userId",user.getUserId(),"password",Encrypt.MD5(user.getPassword()));
 		if(userList.size()==0){
 			map.put("error", "yes");
 			return "../../index";
@@ -70,7 +70,7 @@ public class UserControl extends CrudBaseSupport {
 	@RequestMapping(value = "/userAdd", method = RequestMethod.POST)
 	public String add(User user, Map<String, Object> map) {
 		String message = "";
-		List<User> userList = userService.getUserBy("userName", user.getUserName());
+		List<User> userList = userService.getUserBy("userId", user.getUserId());
 		if(userList.size()==0){
 			user.setPassword(Encrypt.MD5(user.getPassword()));
 			userService.addUser(user);

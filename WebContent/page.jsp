@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="${ctx}/user/userList"><input type="button" name="show" value="show" /></a>
+<input type="button" name="show" value="show" onClick="window.location.href='${ctx}/user/userList'" />
 	<h2>user list info !!!</h2>
 	<c:if test="${empty requestScope.userList }">
 		没有记录
@@ -17,14 +17,22 @@
 	<c:if test="${!empty requestScope.userList }">
 		<table>
 			<tr>
-				<th>userName</th>
-				<th>operation</th>
+				<th>职工ID</th>
+				<th>职工姓名</th>
+				<th>职员岗位</th>
+				<th>手机号码</th>
+				<th>电子邮箱</th>
+				<th>操作</th>
 			</tr>
 			
 			<c:forEach items="${requestScope.userList}" var="u" varStatus="">
 				<tr>
-					<td>${u.id }</td>
-					<td><a href="${ctx}/user/userDelete?id=${u.id }"><input type="button" name="delete" value="delete" /></a></td>
+					<td>${u.userId }</td>
+					<td>${u.userName }</td>
+					<td>${u.type }</td>
+					<td>${u.phone }</td>
+					<td>${u.email }</td>
+					<td><input type="button" name="delete" value="delete" onClick="window.location.href='${ctx}/user/userDelete?id=${u.id }'" /></td>
 					<td></td>
 				
 				</tr>
@@ -38,10 +46,15 @@
 			<form name="addform" action="${ctx}/user/userAdd" method="post">
 			<table>
 				<tr> 
-				<td>用户名</td>
-				<td><input type="text" name="userName" class="userName" placeholder="用户名"></td>
+				<td>职工ID</td>
+				<td><input type="text" name="userId" class="userId" placeholder="职工ID"></td>
 				</tr>
 				
+				<tr> 
+				<td>职工姓名</td>
+				<td><input type="text" name="userName" class="userName" placeholder="职工姓名"></td>
+				</tr>
+								
 				<tr> 
 				<td>密码</td>
 				<td><input type="password" name="password" class="password" placeholder="密码"></td>
@@ -57,7 +70,7 @@
 				</tr>
 				<tr> 
 				<td>手机号码</td>
-				<td><input type="text" name="mobilePhone"  placeholder="电话"></td>
+				<td><input type="text" name="phone"  placeholder="电话"></td>
 				</tr>
 				<tr> 
 				<td>电子邮箱</td>
