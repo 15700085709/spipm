@@ -4,7 +4,6 @@
 <html>
 <head>
   <title>${sys_title}</title>
-  <%@ include file="/style/public/meta.jsp" %>
   <!-- Loading Bootstrap -->
   <link href="${ctx}/style/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Loading Flat UI -->

@@ -23,6 +23,11 @@
 		它会对进入DispatcherServlet的请求进行帅选，如果发现是没有经过映射的请求，就将该请求交由WEB应用服务器默认的 Servlet处理。如果不是静态资源的请求，才由DispatcherServlet继续处理。 -->
 	<mvc:default-servlet-handler />
 	<!-- 配置开启注解 -->
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven>
+     <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+   </mvc:message-converters>
+</mvc:annotation-driven>
 
 </beans>

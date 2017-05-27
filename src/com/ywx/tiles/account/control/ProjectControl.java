@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ywx.tiles.account.entity.Project;
@@ -21,6 +23,17 @@ import com.ywx.tiles.common.support.CrudBaseSupport;
 public class ProjectControl extends CrudBaseSupport {
 	@Autowired
 	private ProjectService projectService;
+	
+	@RequestMapping(value="/json", method = RequestMethod.GET)  
+    public @ResponseBody List<Project> getShopInJSON() {  
+  
+		List<Project> projectList = projectService.getProjectList();
+          
+        return projectList;  
+  
+    }  
+	
+	
 	@RequestMapping("/projectList")
 	public String list(Map<String, Object> map) {
 

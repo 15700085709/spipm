@@ -1,0 +1,25 @@
+button.delete {
+	background-image: url(../img/delete.png);
+    background-size:cover;
+    border:none;
+	height:50px;
+	width:50px;
+}
+
+button.update {
+	background-image: url(../img/update.png);	
+    background-size:cover;
+    border:none;
+	height:50px;
+	width:50px;
+}
+button.order {
+    background-image:url(../img/order.png);
+    background-repeat:no-repeat;
+    background-position:right;
+}
+.top-bottom-middle{ 
+	margin-top: 100px;
+vertical-align: middle;
+float:left;
+} 

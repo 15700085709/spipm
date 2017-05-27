@@ -24,11 +24,14 @@ public class UserServiceImpl implements UserService {
 	public List<User> getUserBy(final String propertyName, final Object value, final String propertyName1, final Object value1){
 		return userDao.findBy(propertyName, value, propertyName1, value1);
 	}
-	public List<User> queryForPage(int offset, int length) {
+	public List<User> queryForPage(int offset, int length, String orderBy, boolean isAsc) {
         //查询所有的记录数
-        Query query= (Query) userDao.createQuery("from User");    
+		String hql = "from User ";
+		if(orderBy!=null)
+			hql += " order by "+ orderBy + (isAsc ? " asc" : " desc");			
+        Query query= (Query) userDao.createQuery(hql);    
          query.setFirstResult(offset);
-         query.setMaxResults(length);            
+         query.setMaxResults(length); 
          return query.list(); 
         }
 	public void deleteById(final Object id){
@@ -36,6 +39,16 @@ public class UserServiceImpl implements UserService {
 	}
 	public void addUser(User user){
 		userDao.save(user);
+	}
+	public void updateUser(User user){
+		userDao.update(user);
+	}
+	public List<User> getUserList(String orderBy, boolean isAsc){
+		return userDao.getAll(orderBy,isAsc); 
+    }
+	
+	public List<User> getUserByHQL(String hql){
+		return userDao.createQuery(hql).list();
 	}
 }
 

@@ -23,7 +23,6 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
 	<!-- 配置SpringSecurity过滤 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>

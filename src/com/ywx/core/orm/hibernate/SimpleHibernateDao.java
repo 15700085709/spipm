@@ -223,7 +223,7 @@ public interface SimpleHibernateDao<T> {
 	 * @param @param values 命名参数,按名称绑定.
 	 */
 	public Query createQuery(final String queryString, final Map<String, ?> values);
-
+	public Query createSQLQuery(final String queryString);
 	// /**
 	// * 按Criteria查询对象列表.
 	// *

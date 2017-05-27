@@ -17,15 +17,13 @@
 
         <div class="page-container">
             <h1>登录</h1>
-            <form action="${ctx}/user/login" method="post">
             	<a id="message" hidden="hidden" color="red">
-            	<font size="3" color="red">登陆失败,用户名或密码错误!</font>
+            		<font size="3" color="red">登陆失败,用户名或密码错误!</font>
             	</a>
-                <input type="text" name="userId" class="userId" placeholder="职工ID">
-                <input type="password" name="password" class="password" placeholder="密码">
-                <button type="submit">登陆</button>
+                <input type="text" id="userId" name="userId" class="userId" placeholder="职工ID">
+                <input type="password" id="password" name="password" class="password" placeholder="密码">
+                <button type="button" id="login_user" >登陆</button>
                 <div class="error"><span>+</span></div>
-            </form>
 
         </div>
 		
@@ -36,10 +34,40 @@
         <script type="text/javascript" src="${ctx}/style/js/jquery-2.2.3.min.js"></script>
     </body>
 	<script>
-		var isError = "${requestScope.error }";
-		if(isError=='yes'){
-			$("#message").show();
-		}
+	$(document).ready(function() {
+		$("#login_user").click(function() {
+	         var userId = $("#userId").val();
+	         var password = $("#password").val();
+	         var user = {
+	        	 userId : userId,
+	             password : password
+	         };//拼装成json格式  
+	
+	        $.ajax({
+	            type : "POST",
+	            url : "${ctx}/user/login2",
+	            data : JSON.stringify(user),
+	            contentType : 'application/json;charset=utf-8',
+	            dataType : 'json',
+	            success : function(data) {
+	
+	                  if (data.isUser == '1') {
+	                    window.location.href = "${ctx}/userInfo.jsp";
+	                }else{
+	        			$("#message").show();
+	                }  
+	
+	            },
+	
+	            error : function(data) {
+	                alert("出错：" + data);
+	            }
+	
+	        });
+
+    	});
+	 });
+		
 	</script>
 </html>
 

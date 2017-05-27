@@ -99,6 +99,7 @@ public abstract class SimpleHibernateDaoImpl<T> implements SimpleHibernateDao<T>
 	public void update(Object entity) {
 		Assert.notNull(entity, "entity不能为空");
 		getSession().update(entity);
+		getSession().flush();
 		logger.debug("save entity: {}", entity);
 	}
 
@@ -245,6 +246,13 @@ public abstract class SimpleHibernateDaoImpl<T> implements SimpleHibernateDao<T>
 		if (values != null) {
 			query.setProperties(values);
 		}
+		return query;
+	}
+	
+	
+	public Query createSQLQuery(final String queryString) {
+		Assert.hasText(queryString, "queryString不能为空");
+		Query query = getSession().createSQLQuery(queryString);
 		return query;
 	}
 

@@ -7,6 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>项目列表</title>
+   <link href="${ctx}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="${ctx}/bootstrapcss/templatemo-style.css" rel="stylesheet"> 
+   <script src="${ctx}/scripts/jquery-3.1.1.min.js"></script>
+   <script src="${ctx}/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -30,8 +34,34 @@ ${ctx}
 			</tr>
 			
 			<c:forEach items="${requestScope.projectList}" var="p" varStatus="">
-				
-				<tr>
+				<div class="modal fade" id="${p.id }" tabindex="-1" role="dialog" 
+				   aria-labelledby="myModalLabel" aria-hidden="true">
+				   <div class="modal-dialog">
+				      <div class="modal-content">
+				         <div class="modal-header">
+				            <button type="button" class="close" 
+				               data-dismiss="modal" aria-hidden="true">
+				                  &times;
+				            </button>
+				            <h4 class="modal-title" id="myModalLabel">
+				               模态框（Modal）标题
+				            </h4>
+				         </div>
+				         <div class="modal-body">
+				            ${p.id }
+				         </div>
+				         <div class="modal-footer">
+				            <button type="button" class="btn btn-default" 
+				               data-dismiss="modal">关闭
+				            </button>
+				            <button type="button" class="btn btn-primary">
+				               提交更改
+				            </button>
+				         </div>
+				      </div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>
+				<tr class="nav-link" data-toggle="modal" data-target="#${p.id }">
 					<td>${p.proCode }</td>
 					<td>${p.proName }</td>
 					<td>${p.proInfo }</td>
