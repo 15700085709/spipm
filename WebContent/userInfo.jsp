@@ -64,7 +64,7 @@
 					软件版本管理 <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">部署软件版本管理</a></li>
+					<li><a href="${ctx}/dpl/dplList?pageNo=1">部署软件版本管理</a></li>
 					<li class="divider"></li>
 					<li><a href="#">软件安装部署的申请与审批</a></li>
 				</ul>

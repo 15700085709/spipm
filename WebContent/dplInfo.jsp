@@ -52,7 +52,7 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href="${ctx}/user/userList?pageNo=1">客户管理</a></li>
-					<li><a href="${ctx}/dpl/dplList?pageNo=1">团队管理</a></li>
+					<li><a href="${ctx}/team/teamList?pageNo=1">团队管理</a></li>
 					<li class="divider"></li>
 					<li><a href="#">项目管理</a></li>
 					<li><a href="#">日报管理</a></li>

@@ -223,13 +223,7 @@ $(document).ready(function(){
 			form.submit();
 		}
 	}
-	function sss(){
-		alert("sss");
-		if (confirm("确定要更新此记录吗？")){
-			form.action = "/nssh/team/teamUpdate";
-			form.submit();
-		}
-	}
+
 	function setCreateTime(){
 		var currentDate = dateFtt("yyyy-MM-dd hh:mm:ss",new Date());
 		$("#createTime").attr("value",currentDate);
@@ -242,7 +236,6 @@ $(document).ready(function(){
 		    		}); 
 	    	 $("#"+id+"updateForm").attr("action", "/nssh/team/teamUpdate");
 	    	 $("#"+id+"updateForm").submit();
-	    	 alert($("#"+id+"updateForm").attr("action"));
 		}
 	}
 	
