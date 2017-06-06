@@ -23,3 +23,8 @@ button.order {
 vertical-align: middle;
 float:left;
 } 
+
+.td-center  
+{  
+    text-align:center;  
+} 

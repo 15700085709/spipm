@@ -18,7 +18,6 @@
    </script>
 </head>
 <body>
-<input class="Wdate" type="text" id="d15" onFocus="WdatePicker({isShowClear:false,readOnly:true})"/>
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid"> 
 	<div class="navbar-header">
@@ -29,7 +28,7 @@
 			<span class="icon-bar">2</span>
 			<span class="icon-bar">3</span>
 		</button>
-		<a class="navbar-brand" href="#">软件项目实施过程管理</a>
+		<a class="navbar-brand" href="#">软件项目实施过程管理系统系统</a>
 	</div>
 	<div class="collapse navbar-collapse" id="example-navbar-collapse">
 		<ul class="nav navbar-nav">
@@ -42,7 +41,7 @@
 					<li class="divider"></li>
 					<li><a href="#">修改密码</a></li>
 					<li class="divider"></li>
-					<li><a href="${ctx}/dpl/logout">退出</a></li>
+					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
 			</li>
 			
@@ -54,25 +53,18 @@
 					<li><a href="${ctx}/user/userList?pageNo=1">客户管理</a></li>
 					<li><a href="${ctx}/team/teamList?pageNo=1">团队管理</a></li>
 					<li class="divider"></li>
-					<li><a href="#">项目管理</a></li>
-					<li><a href="#">日报管理</a></li>
+					<li><a href="${ctx}/project/projectList?pageNo=1">项目管理</a></li>
+					<li><a href="${ctx}/report/reportList?pageNo=1">日报管理</a></li>
 				</ul>
 			</li>
 			
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					软件版本管理 <b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="${ctx}/dpl/dplList?pageNo=1">部署软件版本管理</a></li>
-					<li class="divider"></li>
-					<li><a href="#">软件安装部署的申请与审批</a></li>
-				</ul>
-			</li>
+
+			<li><a href="${ctx}/dpl/dplList?pageNo=1">软件部署和版本管理</a></li>
 			
-			<li><a href="#">工作计划</a></li>
-			<li><a href="#">用户反馈</a></li>
-			<li><a href="#">成果评价</a></li>
+			
+			<li><a href="${ctx}/plan/planList?pageNo=1">工作计划</a></li>
+			<li><a href="${ctx}/feedback/feedbackList?pageNo=1">用户反馈</a></li>
+			<li><a href="${ctx}/evaluation/evaluationList?pageNo=1">成果评价</a></li>
 			
 			
 		</ul>
@@ -107,7 +99,7 @@
 							</tr>
 							<tr>
 								<th>部署人</th>
-      							<td><input type="text" name="dplUser" id="dplUser" class="add" readonly="true"  value="${'666'}"></td>
+      							<td><input type="text" name="dplUser" id="dplUser" class="add" readonly="true"  value="${userSession.userId}"></td>
 							</tr>
 
 							<tr>
@@ -136,90 +128,47 @@
 					</div><!-- /.modal -->
 				</div>
 	
-			<c:forEach items="${requestScope.dplList}" var="t" varStatus="">
-				<div class="modal fade" id="${t.id }" tabindex="-1" role="dialog" 
-				   aria-labelledby="myModalLabel" aria-hidden="true">
-				   <div class="modal-dialog">
-				      <div class="modal-content">
-				         <div class="modal-header">
-				            <button type="button" class="close" 
-				               data-dismiss="modal" aria-hidden="true">
-				                  &times;
-				            </button>
-				            <h4 class="modal-title" id="myModalLabel">
-				               	团队详细信息
-				            </h4>
-				         </div>
-				         <form  method="post" class="updateForm" id="${t.id }${'updateForm' }" >
-				         <div class="modal-body" style="width:300px;float:left;">
-				         	<table class="table table-borderless table-data">
-				  				 <input type="hidden" name="id" value="${t.id }">
-				         	
-				         	
-				         	
-							</table>
-							
-				         </div>
-				         
-
-				         
-				         
-				         <div class="modal-footer">
-				            <button type="button" class="btn btn-default" 
-				               data-dismiss="modal">关闭
-				            </button>
-				            <input type="button" class="btn btn-primary dplUpdate" name="update" id="dplUpdate" disabled="true" value="提交更改" onClick="dplUpdate1('${t.id }');" />
-				            <input type="button" class="btn btn-primary" name="delete" value="删除" onClick="dplDelete1(this.form);" />
-				            
-				         </div>
-				            </form>
-				      </div><!-- /.modal-content -->
-					</div><!-- /.modal -->
-				</div>
-			</c:forEach>
+			
 	<form id="deleteCheck" name="deleteCheck" action="${ctx}/dpl/dplDeleteCheck" method="post">
 		<table  class="table table-borderless table-data">
 			<tr>
-				<th><input type="checkbox" onclick="checkAll(this)">全选</th>
 				<th><input type="button" value ="部署版本号" onclick="dplOrder('dplVersion')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="部署项目" onclick="dplOrder('dplProject')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="部署人" onclick="dplOrder('dplUser')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="部署创建时间" onclick="dplOrder('createTime')" class="btn" style="width:100%"/></th>
-				<th><input type="button" value ="部署时间" onclick="dplOrder('dplTime')" class="btn" style="width:100%"/></th>
+				<th><input type="button" value ="部署开始时间" onclick="dplOrder('dplStartTime')" class="btn" style="width:100%"/></th>
+				<th><input type="button" value ="部署结束时间" onclick="dplOrder('dplEndTime')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="部署war包" onclick="dplOrder('dplSql')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="部署脚本" onclick="dplOrder('dplSql')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="状态" onclick="dplOrder('dplState')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="审批人" onclick="dplOrder('dplApprover')" class="btn" style="width:100%"/></th>
-				<th>操作</th>
 			</tr>
 			<c:forEach items="${requestScope.dplList}" var="t" varStatus="">
 				<tr  id="${t.id }${'tr' }">
-					<td><input type="checkbox" name="dplCheck" value="${t.id }" /></td>
 					<td>${t.dplVersion }</td>
 					<td>${t.dplProject }</td>
 					<td>${t.dplUser }</td>
 					<td>${t.createTime }</td>
-					<td>${t.dplTime }</td>
-					<td>${t.dplWar }<input type="button" class="btn btn-primary"  title="下载war包" value="下载war包" onclick="window.location.href='${ctx}/dpl/dplDownload?suffix=war&id=${t.id }'"></td>
-					<td>${t.dplSql }<input type="button" class="btn btn-primary"  title="下载sql包" value="下载sql包" onclick="window.location.href='${ctx}/dpl/dplDownload?suffix=sql&id=${t.id }'"></td>
-					<td>${t.dplState }<select name="dplProject" id="dplProject" class="add">
+					<td>${t.dplStartTime }</td>
+					<td>${t.dplEndTime }</td>
+					<td><input type="button" class="btn btn-primary"  title="下载war包" value="下载war包" onclick="window.location.href='${ctx}/dpl/dplDownload?suffix=war&id=${t.id }'"></td>
+					<td><input type="button" class="btn btn-primary"  title="下载sql包" value="下载sql包" onclick="window.location.href='${ctx}/dpl/dplDownload?suffix=sql&id=${t.id }'"></td>
+					<td><select name="dplProject" id="${'dplProject'}${t.id }" class="dplProject">
 						<option value="${t.dplState }" class="selectpicker" data-style="btn-danger" selected>${t.dplState }</option>
-						<c:if test="${t.dplState=='创建'}">
+						<c:if test="${t.dplState=='新建'}">
 							<option value="审核">审核</option>
 						</c:if>
-					
-					
-					
-					
+						<c:if test="${t.dplState=='审核'}">
+							<option value="部署中">部署</option>
+						</c:if>
+						<c:if test="${t.dplState=='部署中'}">
+							<option value="完成">完成</option>
+							<option value="取消">取消</option>
+						</c:if>				
 					
 					</select></td>
 					
-
-					
-					
-					
 					<td>${t.dplApprover }</td>
-					<td><input type="button" id="${'编辑'}${t.id }" class="btn btn-primary loadUserlist dpl" data-toggle="modal" data-target="#${t.id }" title="编辑" value="编辑"></td>
 				</tr>
 			</c:forEach>
 
@@ -256,8 +205,7 @@
                 <input type="button" name="lastPage" value="尾页" onClick="window.location.href='${ctx}/dpl/dplList?pageNo=${dplPage.totalPages }'"/>
             </td>
 				<td>
-					<input type="button" class="btn btn-primary loadUserlist dpl" data-toggle="modal" data-target="#addDpl" title="添加" value="添加" onclick="setCreateTime()">
-					<input type="button" class="btn btn-primary"  title="删除" value="删除" disabled="true" id="deleteChecked" onclick="deleteConfirm()">
+					<input type="button" class="btn btn-primary loadUserlist dpl" data-toggle="modal" data-target="#addDpl" title="部署软件" value="部署软件" onclick="setCreateTime()">
 				</td>
 			</tr>
 			</table>

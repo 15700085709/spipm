@@ -26,7 +26,7 @@
 
 	<!-- 项目实现的用户查询服务 -->
 	<bean id="userDetailsService"
-		class="com.ywx.tiles.account.service.impl.UserDetailsServiceImpl" />
+		class="com.spipm.tiles.account.service.impl.UserDetailsServiceImpl" />
 	<!-- 密码加密 -->
-	<bean id="base64PasswordEncoder" class="com.ywx.tiles.account.service.impl.Base64PasswordEncoder" />
+	<bean id="base64PasswordEncoder" class="com.spipm.tiles.account.service.impl.Base64PasswordEncoder" />
 </beans>

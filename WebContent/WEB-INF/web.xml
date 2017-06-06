@@ -37,7 +37,7 @@
 	<!-- 初始化基本信息 -->
 	<servlet>
 		<servlet-name>configServlet</servlet-name>
-		<servlet-class>com.ywx.tiles.common.servlet.ConfigServlet</servlet-class>
+		<servlet-class>com.spipm.tiles.common.servlet.ConfigServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 

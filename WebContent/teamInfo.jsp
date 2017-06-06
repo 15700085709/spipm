@@ -18,7 +18,6 @@
    </script>
 </head>
 <body>
-<input class="Wdate" type="text" id="d15" onFocus="WdatePicker({isShowClear:false,readOnly:true})"/>
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid"> 
 	<div class="navbar-header">
@@ -29,7 +28,7 @@
 			<span class="icon-bar">2</span>
 			<span class="icon-bar">3</span>
 		</button>
-		<a class="navbar-brand" href="#">软件项目实施过程管理</a>
+		<a class="navbar-brand" href="#">软件项目实施过程管理系统</a>
 	</div>
 	<div class="collapse navbar-collapse" id="example-navbar-collapse">
 		<ul class="nav navbar-nav">
@@ -42,7 +41,7 @@
 					<li class="divider"></li>
 					<li><a href="#">修改密码</a></li>
 					<li class="divider"></li>
-					<li><a href="${ctx}/team/logout">退出</a></li>
+					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
 			</li>
 			
@@ -54,25 +53,16 @@
 					<li><a href="${ctx}/user/userList?pageNo=1">客户管理</a></li>
 					<li><a href="${ctx}/team/teamList?pageNo=1">团队管理</a></li>
 					<li class="divider"></li>
-					<li><a href="#">项目管理</a></li>
-					<li><a href="#">日报管理</a></li>
+					<li><a href="${ctx}/project/projectList?pageNo=1">项目管理</a></li>
+					<li><a href="${ctx}/report/reportList?pageNo=1">日报管理</a></li>
 				</ul>
 			</li>
 			
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					软件版本管理 <b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="${ctx}/dpl/dplList?pageNo=1">部署软件版本管理</a></li>
-					<li class="divider"></li>
-					<li><a href="#">软件安装部署的申请与审批</a></li>
-				</ul>
-			</li>
+			<li><a href="${ctx}/dpl/dplList?pageNo=1">软件部署和版本管理</a></li>
 			
-			<li><a href="#">工作计划</a></li>
-			<li><a href="#">用户反馈</a></li>
-			<li><a href="#">成果评价</a></li>
+			<li><a href="${ctx}/plan/planList?pageNo=1">工作计划</a></li>
+			<li><a href="${ctx}/feedback/feedbackList?pageNo=1">用户反馈</a></li>
+			<li><a href="${ctx}/evaluation/evaluationList?pageNo=1">成果评价</a></li>
 			
 			
 		</ul>
@@ -107,8 +97,7 @@
 							</tr>
 							<tr>
 								<th>团队组长</th>
-      							<td><select name="teamLeader" id="teamLeader1" class="add">
-									</select></td>
+      							<td><select name="teamLeader" id="teamLeader1" class="add"></select></td>
 							</tr>
 
 							<tr>

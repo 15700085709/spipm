@@ -20,10 +20,12 @@ $(document).ready(function(){
 	    
 	    
 	    $(".btn.btn-primary.loadUserlist").click( function(event){
+	    	
 	    	if($(this).attr('id')!=null){
 	    		var teamId = $(this).attr('id').substr(2);
 	    		var buttonId= "teamLeader" + teamId;
-	    		
+	    		var buttonId2= "manager" + teamId;
+	    		var buttonId3= "planReceiver" + teamId;
 	    	    $("#addTeamNumber"+teamId).click(function(event){
 	    	    	var value = $("#teamNumber2"+teamId).val();
 	        		for (var i = 0; i < value.length; i++) {
@@ -61,18 +63,30 @@ $(document).ready(function(){
    	        	if(buttonName == "添加"){
             		$("#teamLeader1").empty();
             		$("#teamNumber2").empty();
+            		$("#planReceiver").empty();
+            		$("#manager").empty();
             		for (var i = 0; i < data.users.length; i++) {
      	            	 value = (data.users)[i].userName + "("+ (data.users)[i].userId + ")";
              			$("#teamNumber2").append("<option value='"+value+"'>" + value + "</option>");
             			$("#teamLeader1").append("<option value='"+value+"'>" + value + "</option>");
+            			$("#manager").append("<option value='"+value+"'>" + value + "</option>");
+            			$("#planReceiver").append("<option value='"+value+"'>" + value + "</option>");
             		}
 	            }else if(buttonName == "编辑"){
 	            	value = $("#"+buttonId +" option:first").attr("value");
+	   	        	var value2 = $("#"+buttonId2 +" option:first").attr("value");
+	   	        	var value3 = $("#"+buttonId3 +" option:first").attr("value");
             		$("#"+buttonId).empty();
+            		$("#"+buttonId2).empty();
+            		$("#"+buttonId3).empty();
 	            	$("#"+buttonId).append("<option value='"+value+"'>" + value + "</option>");
+	            	$("#"+buttonId2).append("<option value='"+value2+"'>" + value2 + "</option>");
+	            	$("#"+buttonId3).append("<option value='"+value3+"'>" + value3 + "</option>");
       	             for (var i = 0; i < data.users.length; i++) {
       	            	 value = (data.users)[i].userName + "("+ (data.users)[i].userId + ")";
       	            	$("#"+buttonId).append("<option value='" +value +"'>" + value + "</option>");
+      	            	$("#"+buttonId2).append("<option value='" +value +"'>" + value + "</option>");
+      	            	$("#"+buttonId3).append("<option value='" +value +"'>" + value + "</option>");
       	             }
       	             
 
@@ -98,40 +112,32 @@ $(document).ready(function(){
 	    
 	    
 	    $(".btn.btn-primary.loadUserlist.dpl").click( function(event){
-	    	if($(this).attr('id')!=null){
-	    		var dplId = $(this).attr('id').substr(2);
-	    		var buttonId= "dplProject" + dplId;    		
-	    	}
-	    		
-	    	
-	    	
-	    	
+
 	    	var buttonName = $(this).val();
 	         $.ajax({
-   	          
    	          type: "POST",
    	          url: "/nssh/dpl/getAllProject",
    	          dataType: "json",
    	         
  	              contentType : 'application/json;charset=utf-8',
    	         success: function (data) {
-   	        	var value;
-   	        	if(buttonName == "添加"){
+   	        	 	var value;
             		$("#dplProject").empty();
+            		$("#reportProject").empty();
+            		$("#planProject").empty();
+            		$("#fdbkProject").empty();
+            		$("#evltProject").empty();
+            		
             		for (var i = 0; i < data.projects.length; i++) {
      	            	 value = (data.projects)[i].proName + "("+ (data.projects)[i].proCode + ")";
              			$("#dplProject").append("<option value='"+value+"'>" + value + "</option>");
+             			$("#reportProject").append("<option value='"+value+"'>" + value + "</option>");
+             			$("#planProject").append("<option value='"+value+"'>" + value + "</option>");
+             			$("#fdbkProject").append("<option value='"+value+"'>" + value + "</option>");
+             			$("#evltProject").append("<option value='"+value+"'>" + value + "</option>");
             		}
-	            }else if(buttonName == "编辑"){
-	            	value = $("#"+buttonId +" option:first").attr("value");
-            		$("#"+buttonId).empty();
-	            	$("#"+buttonId).append("<option value='"+value+"'>" + value + "</option>");
-      	             for (var i = 0; i < data.projects.length; i++) {
-      	            	 value = (data.projects)[i].proName + "("+ (data.projects)[i].proCode + ")";
-      	            	$("#"+buttonId).append("<option value='" +value +"'>" + value + "</option>");
-      	             }
-      	                	    	   
-	            }
+	           
+      	            
    	        	 
    	         },
    	         error: function(XMLHttpRequest, textStatus, errorThrown) {  //#3这个error函数调试时非常有用，如果解析不正确，将会弹出错误框
@@ -159,6 +165,87 @@ $(document).ready(function(){
        	 });
        	 $("#dplAdd").attr('disabled',isDisabled);
 	    });
+
+	    $("#reportProject").bind('change',function(){
+	    	var isDisabled=false;
+       	 $(".add").each(function() {
+       		 if($(this).val()==""){
+       			 isDisabled = true;
+       		 }
+       	 });
+       	 $("#reportAdd").attr('disabled',isDisabled);
+	    });
+	    
+	    
+	    $(".Wdate.pro").bind(' blur',function(){
+	    	var startId = $(this).attr("id").replace("End","Start");
+	    	var endId = $(this).attr("id").replace("Start","End");
+	    	if($("#"+startId).val()!=""&&$("#"+endId).val()!=""){
+	    		var ymdStart = $("#"+startId).val().split("-");
+	    		var proStartTime = new Date(ymdStart[0],ymdStart[1],ymdStart[2]);
+	    		var ymdEnd = $("#"+endId).val().split("-");
+	    		var proEndTime = new Date(ymdEnd[0],ymdEnd[1],ymdEnd[2]);
+	    		if(proStartTime>proEndTime){
+	    			alert("项目结束时间必须大于开始时间！");
+	    			$(this).val("");
+	    		}
+	    	}
+		    	var isDisabled=false;
+		    	var isDisabled2=false;
+	       	 $(".add").each(function() {
+	       		 if($(this).val()==""){
+	       			 isDisabled = true;
+	       		 }
+	       	 });
+	       	 
+
+	      	        	$(this).parents('.updateForm').find(".update").each(function() {
+	      	        		 if($(this).val()==""){
+	      	        			 isDisabled2 = true;
+	      	        		 }
+	      	        	 });
+	      	        	$(this).parents('.updateForm').find(".btn.btn-primary.projectUpdate").attr('disabled',isDisabled2);
+
+	       	 
+	       	 $("#projectAdd").attr('disabled',isDisabled);
+	    });
+	    
+	    
+	    $(".Wdate.plan").bind(' blur',function(){
+	    	var startId = $(this).attr("id").replace("End","Start");
+	    	var endId = $(this).attr("id").replace("Start","End");
+	    	if($("#"+startId).val()!=""&&$("#"+endId).val()!=""){
+	    		var ymdStart = $("#"+startId).val().split("-");
+	    		var planStartTime = new Date(ymdStart[0],ymdStart[1],ymdStart[2]);
+	    		var ymdEnd = $("#"+endId).val().split("-");
+	    		var planEndTime = new Date(ymdEnd[0],ymdEnd[1],ymdEnd[2]);
+	    		if(planStartTime>planEndTime){
+	    			alert("项目结束时间必须大于开始时间！");
+	    			$(this).val("");
+	    		}
+	    	}
+		    	var isDisabled=false;
+		    	var isDisabled2=false;
+	       	 $(".add").each(function() {
+	       		 if($(this).val()==""){
+	       			 isDisabled = true;
+	       		 }
+	       	 });
+	       	 
+
+	      	        	$(this).parents('.updateForm').find(".update").each(function() {
+	      	        		 if($(this).val()==""){
+	      	        			 isDisabled2 = true;
+	      	        		 }
+	      	        	 });
+	      	        	$(this).parents('.updateForm').find(".btn.btn-primary.planUpdate").attr('disabled',isDisabled2);
+
+	       	 
+	       	 $("#planAdd").attr('disabled',isDisabled);
+	    });
+	    
+	    
+	    
 	    $(".add").each(function() {
 	        $(this).bind(' input propertychange', function() {
 	        	if($(this).attr("id")=="dplWar"){
@@ -185,6 +272,11 @@ $(document).ready(function(){
 	        	 $("#userAdd").attr('disabled',isDisabled);
 	        	 $("#teamAdd").attr('disabled',isDisabled);
 	        	 $("#dplAdd").attr('disabled',isDisabled);
+	        	 $("#projectAdd").attr('disabled',isDisabled);
+	        	 $("#reportAdd").attr('disabled',isDisabled);
+	        	 $("#planAdd").attr('disabled',isDisabled);
+	        	 $("#feedbackAdd").attr('disabled',isDisabled);
+	        	 $("#evaluationAdd").attr('disabled',isDisabled);
 	        });
 	    });
 	    
@@ -199,11 +291,35 @@ $(document).ready(function(){
    	        	 });
    	        	$(this).parents('.updateForm').find(".btn.btn-primary.userUpdate").attr('disabled',isDisabled);
    	        	$(this).parents('.updateForm').find(".btn.btn-primary.teamUpdate").attr('disabled',isDisabled);
+   	        	$(this).parents('.updateForm').find(".btn.btn-primary.projectUpdate").attr('disabled',isDisabled);
+   	        	$(this).parents('.updateForm').find(".btn.btn-primary.planUpdate").attr('disabled',isDisabled);
    	        });
    	    });
 
 
+  	   
+  		$(".dplState").each(function() {
+  			$(this).bind('change',function(){
+  				
+
+  				window.location.href="/nssh/dpl/setState?state="+$(this).val()+"&id="+$(this).attr("id").substr(8);
+  			});
+  			
+  		});
+  		
+  		$(".planState").each(function() {
+  			$(this).bind('change',function(){
+
+  				window.location.href="/nssh/plan/setState?state="+$(this).val()+"&id="+$(this).attr("id").substr(9);
+  			});
+  			
+  		});
+  	   
 	});
+
+
+
+
 	/**
 	 * 鼠标划过就展开子菜单，免得需要点击才能展开
 	 */
@@ -224,9 +340,25 @@ $(document).ready(function(){
 		}
 	}
 
+	function projectUpdate1(form){
+		if (confirm("确定要更新此记录吗？")){
+			form.action = "/nssh/project/projectUpdate";
+			form.submit();
+		}
+	}
+	function planUpdate1(form){
+		if (confirm("确定要更新此记录吗？")){
+			form.action = "/nssh/plan/planUpdate";
+			form.submit();
+		}
+	}
+	
 	function setCreateTime(){
 		var currentDate = dateFtt("yyyy-MM-dd hh:mm:ss",new Date());
 		$("#createTime").attr("value",currentDate);
+		$("#reportDate").attr("value",currentDate);
+		$("#fdbkTime").attr("value",currentDate);
+		$("#evltTime").attr("value",currentDate);
 	}
 	
 	function teamUpdate1(id){
@@ -241,6 +373,18 @@ $(document).ready(function(){
 	
 	
 	
+	function projectDelete(form){
+		if (confirm("确定要删除此记录吗？")){
+			form.action = "/nssh/project/projectDelete";
+			form.submit();
+		}
+	}
+	function planDelete(form){
+		if (confirm("确定要删除此记录吗？")){
+			form.action = "/nssh/plan/planDelete";
+			form.submit();
+		}
+	}
 	function userDelete(form){
 		if (confirm("确定要删除此记录吗？")){
 			form.action = "/nssh/user/userDelete";
@@ -261,7 +405,12 @@ $(document).ready(function(){
 	function teamOrder(orderBy){
 		window.location.href="/nssh/team/teamOrder?orderBy="+orderBy;
 	}
-	
+	function dplOrder(orderBy){
+		window.location.href="/nssh/dpl/dplOrder?orderBy="+orderBy;
+	}
+	function reportOrder(orderBy){
+		window.location.href="/nssh/report/reportOrder?orderBy="+orderBy;
+	}
 	function checkAll(allcheck){
 		if(allcheck.checked){
 			$('input[type=checkbox]').each(function() {
@@ -301,6 +450,25 @@ $(document).ready(function(){
 
         
     },200);
+	
+	
+	function setAppendId(appendId){
+		
+		$("#appendMid").attr("value",appendId);
+		var currentDate = dateFtt("yyyy-MM-dd hh:mm:ss",new Date());
+		$("#appendContentM").attr("value",currentDate);
+		$('.form-control.append').bind(' input',function(){
+  				if($(this).val()!=""){
+  	            	$("#appendAdd").attr('disabled',false);
+  				}else{
+
+  	            	$("#appendAdd").attr('disabled',true);
+  				}
+  				
+  			});
+	}
+	
+	
 	
 	
 	/**************************************时间格式化处理************************************/
