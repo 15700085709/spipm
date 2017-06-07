@@ -37,9 +37,7 @@
 					${userSession.userId} <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">个人信息</a></li>
-					<li class="divider"></li>
-					<li><a href="#">修改密码</a></li>
+					<li><a href="${ctx}/home/homeInfo?userId=${userSession.userId}">个人信息</a></li>
 					<li class="divider"></li>
 					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
@@ -172,7 +170,9 @@
             </td>
 				<td>
 					<input type="button" class="btn btn-primary loadUserlist dpl" data-toggle="modal" data-target="#addEvaluation" title="添加" value="添加"  onclick="setCreateTime()">
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 					<input type="button" class="btn btn-primary"  title="删除" value="删除" disabled="true" id="deleteChecked" onclick="deleteConfirm()" >
+				</c:if>
 				</td>
 			</tr>
 			</table>

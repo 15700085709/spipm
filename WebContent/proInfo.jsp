@@ -37,9 +37,7 @@
 					${userSession.userId} <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">个人信息</a></li>
-					<li class="divider"></li>
-					<li><a href="#">修改密码</a></li>
+					<li><a href="${ctx}/home/homeInfo?userId=${userSession.userId}">个人信息</a></li>
 					<li class="divider"></li>
 					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
@@ -199,7 +197,9 @@
 				<th><input type="button" value ="项目进度" onclick="projectOrder('process')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="项目开始时间" onclick="projectOrder('proStartTime')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="项目结束时间" onclick="projectOrder('proEndTime')" class="btn" style="width:100%"/></th>
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 				<th>操作</th>
+				</c:if>
 			</tr>
 			<c:forEach items="${requestScope.projectList}" var="u" varStatus="">
 				<tr  id="${u.id }${'tr' }">
@@ -210,7 +210,9 @@
 					<td>${u.process }</td>
 					<td>${u.proStartTime }</td>
 					<td>${u.proEndTime }</td>
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 					<td><input type="button" id="${'编辑'}${u.id }" class="btn btn-primary loadUserlist" data-toggle="modal" data-target="#${u.id }" title="编辑" value="编辑"></td>
+				</c:if>
 				</tr>
 			</c:forEach>
 
@@ -247,8 +249,10 @@
                 <input type="button" name="lastPage" value="尾页" onClick="window.location.href='${ctx}/project/projectList?pageNo=${projectPage.totalPages }'"/>
             </td>
 				<td>
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 					<input type="button" class="btn btn-primary loadUserlist" data-toggle="modal" data-target="#addProject" title="添加" value="添加">
 					<input type="button" class="btn btn-primary"  title="删除" value="删除" disabled="true" id="deleteChecked" onclick="deleteConfirm()">
+				</c:if>
 				</td>
 			</tr>
 			</table>

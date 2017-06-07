@@ -37,9 +37,7 @@
 					${userSession.userId} <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">个人信息</a></li>
-					<li class="divider"></li>
-					<li><a href="#">修改密码</a></li>
+					<li><a href="${ctx}/home/homeInfo?userId=${userSession.userId}">个人信息</a></li>
 					<li class="divider"></li>
 					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
@@ -165,7 +163,7 @@
 								<td><input class="Wdate plan update" type="text" name="planEndTime" id="${'planEndTime'}${u.id}" onFocus="WdatePicker({isShowClear:false,readOnly:true})" value="${u.planEndTime }"/></td>
 							</tr>
 							<tr>
-								<th>计划内容/th>
+								<th>计划内容</th>
 								<td><textarea class="form-control update" rows="4" name="planContent" >${u.planContent }</textarea> </td>
 							</tr>
 							<tr>
@@ -201,7 +199,10 @@
 				<th><input type="button" value ="计划内容" onclick="planOrder('planContent')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="被抄送人" onclick="planOrder('planReceiver')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="计划状态" onclick="planOrder('planState')" class="btn" style="width:100%"/></th>				
+				
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 				<th>操作</th>
+				</c:if>
 			</tr>
 			<c:forEach items="${requestScope.planList}" var="u" varStatus="">
 				<tr  id="${u.id }${'tr' }">
@@ -214,13 +215,15 @@
 					<td>${u.planReceiver }</td>
 					<td><select name="planState" id="${'planState'}${u.id }" class="planState">
 						<option value="${u.planState }" class="selectpicker" data-style="btn-danger" selected>${u.planState }</option>
-						<c:if test="${u.planState=='进行中'}">
+						<c:if test="${u.planState=='进行中'&&userSession.type=='pm'}">
 							<option value="完成">完成</option>
 						</c:if>
 		
 					
 					</select></td>
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 					<td><input type="button" id="${'编辑'}${u.id }" class="btn btn-primary loadUserlist" data-toggle="modal" data-target="#${u.id }" title="编辑" value="编辑"></td>
+				</c:if>
 				</tr>
 			</c:forEach>
 
@@ -257,8 +260,10 @@
                 <input type="button" name="lastPage" value="尾页" onClick="window.location.href='${ctx}/plan/planList?pageNo=${planPage.totalPages }'"/>
             </td>
 				<td>
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 					<input type="button" class="btn btn-primary loadUserlist dpl" data-toggle="modal" data-target="#addPlan" title="添加" value="添加">
 					<input type="button" class="btn btn-primary"  title="删除" value="删除" disabled="true" id="deleteChecked" onclick="deleteConfirm()">
+				</c:if>
 				</td>
 			</tr>
 			</table>

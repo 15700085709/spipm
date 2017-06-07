@@ -37,9 +37,7 @@
 					${userSession.userId} <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">个人信息</a></li>
-					<li class="divider"></li>
-					<li><a href="#">修改密码</a></li>
+					<li><a href="${ctx}/home/homeInfo?userId=${userSession.userId}">个人信息</a></li>
 					<li class="divider"></li>
 					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
@@ -102,7 +100,7 @@
 
 							<tr>
 								<th>团队项目</th>
-								<td><input type="text" name="teamWork" id="teamWork" class="add"></td>
+      							<td><select name="teamWork" id="teamWork" class="add"></select></td>
 							</tr>
 							</table>
 							
@@ -168,7 +166,9 @@
 							</tr>
 							<tr>
 								<th>团队项目</th>
-								<td><input type="text" name="teamWork"  class="update" value="${t.teamWork }"></td>
+      							<td><select name="teamWork" class="update" id="${'teamWork' }${t.id }">
+      								<option value="${t.teamWork }" selected>${t.teamWork }</option>
+      							</select></td>
 							</tr>
 							</table>
 							
@@ -221,7 +221,9 @@
 				<th><input type="button" value ="团队组长" onclick="teamOrder('teamLeader')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="团队成员" onclick="teamOrder('teamNumber')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="团队项目" onclick="teamOrder('teamWork')" class="btn" style="width:100%"/></th>
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 				<th>操作</th>
+			</c:if>
 			</tr>
 			<c:forEach items="${requestScope.teamList}" var="t" varStatus="">
 				<tr  id="${t.id }${'tr' }">
@@ -231,7 +233,9 @@
 					<td>${t.teamLeader }</td>
 					<td>${t.teamNumber }</td>
 					<td>${t.teamWork }</td>
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 					<td><input type="button" id="${'编辑'}${t.id }" class="btn btn-primary loadUserlist" data-toggle="modal" data-target="#${t.id }" title="编辑" value="编辑"></td>
+				</c:if>
 				</tr>
 			</c:forEach>
 
@@ -268,8 +272,10 @@
                 <input type="button" name="lastPage" value="尾页" onClick="window.location.href='${ctx}/team/teamList?pageNo=${teamPage.totalPages }'"/>
             </td>
 				<td>
-					<input type="button" class="btn btn-primary loadUserlist" data-toggle="modal" data-target="#addTeam" title="添加" value="添加">
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
+					<input type="button" class="btn btn-primary loadUserlist dpl" data-toggle="modal" data-target="#addTeam" title="添加" value="添加">
 					<input type="button" class="btn btn-primary"  title="删除" value="删除" disabled="true" id="deleteChecked" onclick="deleteConfirm()">
+				</c:if>
 				</td>
 			</tr>
 			</table>

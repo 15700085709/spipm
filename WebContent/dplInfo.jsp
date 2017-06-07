@@ -37,9 +37,7 @@
 					${userSession.userId} <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">个人信息</a></li>
-					<li class="divider"></li>
-					<li><a href="#">修改密码</a></li>
+					<li><a href="${ctx}/home/homeInfo?userId=${userSession.userId}">个人信息</a></li>
 					<li class="divider"></li>
 					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
@@ -153,9 +151,9 @@
 					<td>${t.dplEndTime }</td>
 					<td><input type="button" class="btn btn-primary"  title="下载war包" value="下载war包" onclick="window.location.href='${ctx}/dpl/dplDownload?suffix=war&id=${t.id }'"></td>
 					<td><input type="button" class="btn btn-primary"  title="下载sql包" value="下载sql包" onclick="window.location.href='${ctx}/dpl/dplDownload?suffix=sql&id=${t.id }'"></td>
-					<td><select name="dplProject" id="${'dplProject'}${t.id }" class="dplProject">
+					<td><select name="dplState" id="${'dplState'}${t.id }" class="dplState">
 						<option value="${t.dplState }" class="selectpicker" data-style="btn-danger" selected>${t.dplState }</option>
-						<c:if test="${t.dplState=='新建'}">
+						<c:if test="${t.dplState=='新建'&&userSession.type=='pm'}">
 							<option value="审核">审核</option>
 						</c:if>
 						<c:if test="${t.dplState=='审核'}">
@@ -205,7 +203,9 @@
                 <input type="button" name="lastPage" value="尾页" onClick="window.location.href='${ctx}/dpl/dplList?pageNo=${dplPage.totalPages }'"/>
             </td>
 				<td>
+				<c:if test="${userSession.type!='customer'}">
 					<input type="button" class="btn btn-primary loadUserlist dpl" data-toggle="modal" data-target="#addDpl" title="部署软件" value="部署软件" onclick="setCreateTime()">
+				</c:if>
 				</td>
 			</tr>
 			</table>

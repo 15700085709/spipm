@@ -37,9 +37,7 @@
 					${userSession.userId} <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">个人信息</a></li>
-					<li class="divider"></li>
-					<li><a href="#">修改密码</a></li>
+					<li><a href="${ctx}/home/homeInfo?userId=${userSession.userId}">个人信息</a></li>
 					<li class="divider"></li>
 					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
@@ -105,7 +103,6 @@
 								<th>用户类型</th>
       							<td><select name="type" id="type" class="add">
 									  <option value ="dev" >开发</option>
-									  <option value ="sqa" >测试</option>
 									  <option value="pm" >项目经理</option>
 									  <option value="customer" >客户</option>
 									</select></td>
@@ -167,7 +164,6 @@
 								<th>用户类型</th>
       							<td><select name="type" class="update">
 									  <option value ="dev" ${u.type=="dev"?'selected':''}>开发</option>
-									  <option value ="sqa" ${u.type=="sqa"?'selected':''}>测试</option>
 									  <option value="pm" ${u.type=="pm"?'selected':''}>项目经理</option>
 									  <option value="customer" ${u.type=="customer"?'selected':''}>客户</option>
 									</select></td>
@@ -205,7 +201,9 @@
 				<th><input type="button" value ="职工岗位" onclick="userOrder('type')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="手机号码" onclick="userOrder('phone')" class="btn" style="width:100%"/></th>
 				<th><input type="button" value ="电子邮箱" onclick="userOrder('email')" class="btn" style="width:100%"/></th>
+			<c:if test="${userSession.type=='admin'}">
 				<th>操作</th>
+			</c:if>
 			</tr>
 			<c:forEach items="${requestScope.userList}" var="u" varStatus="">
 				<tr  id="${u.id }${'tr' }">
@@ -215,7 +213,9 @@
 					<td>${u.type }</td>
 					<td>${u.phone }</td>
 					<td>${u.email }</td>
+				<c:if test="${userSession.type=='admin'}">
 					<td><input type="button" class="btn btn-primary" data-toggle="modal" data-target="#${u.id }" title="编辑" value="编辑"></td>
+				</c:if>
 				</tr>
 			</c:forEach>
 
@@ -252,8 +252,10 @@
                 <input type="button" name="lastPage" value="尾页" onClick="window.location.href='${ctx}/user/userList?pageNo=${userPage.totalPages }'"/>
             </td>
 				<td>
+				<c:if test="${userSession.type=='admin'}">
 					<input type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUser" title="添加" value="添加">
 					<input type="button" class="btn btn-primary"  title="删除" value="删除" disabled="true" id="deleteChecked" onclick="deleteConfirm()">
+				</c:if>
 				</td>
 			</tr>
 			</table>

@@ -2,6 +2,7 @@ package com.spipm.tiles.account.control;
 
 import java.io.OutputStream;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -88,13 +89,14 @@ public class PlanControl extends CrudBaseSupport {
 		List<Plan> plansByProject = planService.getPlanBy("planProject", planProject);
 		List<Plan> plansByState = planService.getPlanBy("planProject", planProject,"planState", "完成");
 		double process = 0.0;
+		DecimalFormat df = new DecimalFormat("#.00");  
 		if(plansByProject!=null&&plansByProject.size()!=0)
 			process = (double)plansByState.size() / (double)plansByProject.size()*100;
 		
 		List<Project> projects = projectService.getProjectBy("proCode", planProject.substring(planProject.indexOf("(")+1, planProject.indexOf(")")));
 		if(projects!=null&&projects.size()!=0){
 			Project project = projects.get(0);
-			project.setProcess(String.valueOf(process)+"%");
+			project.setProcess(df.format(process)+"%");
 			projectService.updateProject(project);
 			System.out.println(project.getProcess());
 		}
@@ -156,6 +158,7 @@ public class PlanControl extends CrudBaseSupport {
 				List<Plan> plansByProject = planService.getPlanBy("planProject", planProject);
 				List<Plan> plansByState = planService.getPlanBy("planProject", planProject,"planState", "完成");
 				double process = 0.0;
+				DecimalFormat df = new DecimalFormat("#.00");  
 				if(plansByProject!=null&&plansByProject.size()!=0)
 					process = (double)plansByState.size() / (double)plansByProject.size()*100;
 				System.out.println(planProject.substring(planProject.indexOf("(")+1, planProject.indexOf(")")));
@@ -163,7 +166,7 @@ public class PlanControl extends CrudBaseSupport {
 				List<Project> projects = projectService.getProjectBy("proCode", planProject.substring(planProject.indexOf("(")+1, planProject.indexOf(")")));
 				if(projects!=null&&projects.size()!=0){
 					Project project = projects.get(0);
-					project.setProcess(String.valueOf(process)+"%");
+					project.setProcess(df.format(process)+"%");
 					projectService.updateProject(project);
 				}
 			}

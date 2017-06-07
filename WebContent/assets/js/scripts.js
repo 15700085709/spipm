@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
            success : function(data) {
 
                  if (data.isUser == '1') {
-                   window.location.href = "/nssh/userInfo.jsp";
+                   window.location.href = "/nssh/home/homeInfo?userId="+userId;
                }else{
        			$("#message").show();
                }  

@@ -21,7 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spipm.core.orm.Page;
+import com.spipm.tiles.account.entity.Deployment;
+import com.spipm.tiles.account.entity.Project;
 import com.spipm.tiles.account.entity.User;
+import com.spipm.tiles.account.service.DplService;
+import com.spipm.tiles.account.service.ProjectService;
 import com.spipm.tiles.account.service.UserService;
 import com.spipm.tiles.common.support.CrudBaseSupport;
 
@@ -31,6 +35,10 @@ public class UserControl extends CrudBaseSupport {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DplService dplService;	
+	@Autowired
+	private ProjectService projectService;
 	private  HttpServletRequest request;
 	private  HttpServletResponse response;
 	private HttpSession session;
@@ -63,6 +71,9 @@ public class UserControl extends CrudBaseSupport {
 		List<User> userList = userService.queryForPage(userPage.getFirst()-1, userPage.getPageSize(), orderBy, isAsc);
 		map.put("userList", userList);
 		session.setAttribute("userPage", userPage);
+		
+		
+		
 		for(User user : userList){
 			System.out.println(user.getUserId());
 		}
@@ -97,26 +108,45 @@ public class UserControl extends CrudBaseSupport {
 			map.put("error", "yes");
 			return "../../index";
 		}else{
-
-			session.setAttribute("user", userList.get(0));
-			return "../../userInfo";
+			User user2 = userList.get(0);
+			List<Deployment> dplList = null;
+			if("dev".equals(user2.getType()))
+				dplList = dplService.getDplBy("dplUser", user2.getUserId());
+			else if("manager".equals(user2.getType())){
+				List<Project> projectList = projectService.getProjectBy("manager", user2.getUserId());
+				for(Project project : projectList){
+					List<Deployment> dplList2 = dplService.getDplBy("dplProject", project.getProName()+"("+project.getProCode()+")");
+					for(Deployment d : dplList2){
+						dplList.add(d);
+					}
+				}
+			}
+			map.put("dplList", dplList);
+			session.setAttribute("user", user2);
+			return "../../home";
 		}
 	}
 	
 	@ResponseBody
     @RequestMapping(value = "/login2", method = RequestMethod.POST)
-    public Map<String, Object> login2(@RequestBody User user) throws ServletException, IOException {
-        Map<String, Object> map = new HashMap<String, Object>();
+    public Map<String, Object> login2(@RequestBody User user, Map<String, Object> map) throws ServletException, IOException {
+        Map<String, Object> map2 = new HashMap<String, Object>();
 		List<User> userList = userService.getUserBy("userId",user.getUserId(),"password",user.getPassword());
 		System.out.println(user.getUserId());
         if (userList.size()==0)
-            map.put("isUser", 0);
+            map2.put("isUser", 0);
         else{
-            map.put("isUser", 1);
+        	User user2 = userList.get(0);
+
+            map2.put("isUser", 1);
 			session.setAttribute("userSession", userList.get(0));
         }
 
-        return map;
+        
+        
+        
+        
+        return map2;
 
     }
 	

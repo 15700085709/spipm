@@ -37,9 +37,7 @@
 					${userSession.userId} <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">个人信息</a></li>
-					<li class="divider"></li>
-					<li><a href="#">修改密码</a></li>
+					<li><a href="${ctx}/home/homeInfo?userId=${userSession.userId}">个人信息</a></li>
 					<li class="divider"></li>
 					<li><a href="${ctx}/user/logout">退出</a></li>
 				</ul>
@@ -171,8 +169,12 @@
                 <input type="button" name="lastPage" value="尾页" onClick="window.location.href='${ctx}/feedback/feedbackList?pageNo=${feedbackPage.totalPages }'"/>
             </td>
 				<td>
+				<c:if test="${userSession.type=='customer'}">
 					<input type="button" class="btn btn-primary loadUserlist dpl" data-toggle="modal" data-target="#addFeedback" title="添加" value="添加"  onclick="setCreateTime()">
+				</c:if>
+				<c:if test="${userSession.type=='admin'||userSession.type=='pm'}">
 					<input type="button" class="btn btn-primary"  title="删除" value="删除" disabled="true" id="deleteChecked" onclick="deleteConfirm()" >
+				</c:if>	
 				</td>
 			</tr>
 			</table>

@@ -127,6 +127,7 @@ $(document).ready(function(){
             		$("#planProject").empty();
             		$("#fdbkProject").empty();
             		$("#evltProject").empty();
+            		$("#teamWork").empty();
             		
             		for (var i = 0; i < data.projects.length; i++) {
      	            	 value = (data.projects)[i].proName + "("+ (data.projects)[i].proCode + ")";
@@ -135,6 +136,7 @@ $(document).ready(function(){
              			$("#planProject").append("<option value='"+value+"'>" + value + "</option>");
              			$("#fdbkProject").append("<option value='"+value+"'>" + value + "</option>");
              			$("#evltProject").append("<option value='"+value+"'>" + value + "</option>");
+             			$("#teamWork").append("<option value='"+value+"'>" + value + "</option>");
             		}
 	           
       	            
